@@ -1,6 +1,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/unrealengine
 # Edit at https://www.toptal.com/developers/gitignore?templates=unrealengine
 
+### Assets
+Content/ParagonTerra
+Content/ParagonSparrow
+Content/ParagonSerath
+Content/ParagonRevenant
+Content/ParagonKallari
+
 ### UnrealEngine ###
 # Visual Studio 2015 user specific files
 .vs/
