@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "DHCharacterAnimInstance.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ADHCharacter
@@ -35,7 +36,7 @@ ADHCharacter::ADHCharacter()
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character	
+	CameraBoom->TargetArmLength = 500.0f; // The camera follows at this distance behind the character	
 	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
 	// Create a follow camera
@@ -43,8 +44,18 @@ ADHCharacter::ADHCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -97.0f), FRotator(0.0f, -90.0f, 0.0f));
+}
+
+void ADHCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	AnimInstance = Cast<UDHCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	//if (AnimInstance)
+	//{
+
+	//}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,6 +85,8 @@ void ADHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ADHCharacter::OnResetVR);
+
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ADHCharacter::Attack);
 }
 
 
@@ -90,12 +103,23 @@ void ADHCharacter::OnResetVR()
 
 void ADHCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
-		Jump();
+	Jump();
 }
 
 void ADHCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
-		StopJumping();
+	StopJumping();
+}
+
+void ADHCharacter::Attack()
+{
+	//if (IsAttacking)
+	//{
+	//	return;
+	//}
+
+	AnimInstance->PlayAttackMontage();
+	IsAttacking = true;
 }
 
 void ADHCharacter::TurnAtRate(float Rate)

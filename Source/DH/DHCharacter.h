@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "DHCharacter.generated.h"
 
+class UDHCharacterAnimInstance;
+
 UCLASS(config=Game)
 class ADHCharacter : public ACharacter
 {
@@ -20,6 +22,9 @@ class ADHCharacter : public ACharacter
 	class UCameraComponent* FollowCamera;
 public:
 	ADHCharacter();
+
+protected:
+	virtual void PostInitializeComponents() override;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -58,6 +63,8 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	void Attack();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -68,5 +75,12 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+protected:
+	UPROPERTY()
+	bool IsAttacking;
+
+	UPROPERTY()
+	UDHCharacterAnimInstance* AnimInstance;
 };
 
