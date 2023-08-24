@@ -63,7 +63,10 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	// 공격 애니메이션 재생
 	void Attack();
+	// 자식 클래스에서 override
+	virtual void AttackCheck();
 
 protected:
 	// APawn interface
@@ -75,6 +78,9 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UFUNCTION()
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 protected:
 	UPROPERTY()

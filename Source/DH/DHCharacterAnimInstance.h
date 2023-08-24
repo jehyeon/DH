@@ -6,6 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "DHCharacterAnimInstance.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackHit);
+
 UCLASS()
 class DH_API UDHCharacterAnimInstance : public UAnimInstance
 {
@@ -24,6 +26,10 @@ public:
 	virtual void PlayAttackMontage();
 
 private:
+	UFUNCTION()
+	void AnimNotify_AttackHit();
+
+private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 	float Speed;
 
@@ -38,4 +44,7 @@ private:
 
 	UPROPERTY()
 	FVector CurrentAcceleration = FVector::ZeroVector;
+
+public:
+	FOnAttackHit OnAttackHit;
 };

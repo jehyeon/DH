@@ -13,5 +13,7 @@ UCLASS()
 class DH_API ACharacterTerra : public ADHCharacter
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void AttackCheck() override;
 };

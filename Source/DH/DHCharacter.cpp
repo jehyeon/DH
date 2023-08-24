@@ -52,10 +52,11 @@ void ADHCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	AnimInstance = Cast<UDHCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	//if (AnimInstance)
-	//{
-
-	//}
+	if (AnimInstance)
+	{
+		AnimInstance->OnMontageEnded.AddDynamic(this, &ADHCharacter::OnAttackMontageEnded);
+		AnimInstance->OnAttackHit.AddUObject(this, &ADHCharacter::AttackCheck);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -89,6 +90,12 @@ void ADHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ADHCharacter::Attack);
 }
 
+// 공격 애니메이션이 끝난 후 실행
+void ADHCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	IsAttacking = false;
+}
+
 
 void ADHCharacter::OnResetVR()
 {
@@ -113,13 +120,20 @@ void ADHCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 
 void ADHCharacter::Attack()
 {
-	//if (IsAttacking)
-	//{
-	//	return;
-	//}
+	if (IsAttacking)
+	{
+		return;
+	}
 
+	// Attack check (using animation notify)
 	AnimInstance->PlayAttackMontage();
 	IsAttacking = true;
+}
+
+void ADHCharacter::AttackCheck()
+{
+	// 자식 클래스에서 override
+	UE_LOG(LogTemp, Warning, TEXT("Need to override ADHCharacter::AttackCheck"));
 }
 
 void ADHCharacter::TurnAtRate(float Rate)

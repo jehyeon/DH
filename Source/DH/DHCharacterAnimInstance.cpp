@@ -37,5 +37,10 @@ void UDHCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void UDHCharacterAnimInstance::PlayAttackMontage()
 {
+	// 자식 클래스에서 override
 }
 
+void UDHCharacterAnimInstance::AnimNotify_AttackHit()
+{
+	OnAttackHit.Broadcast();
+}
