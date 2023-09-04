@@ -2,6 +2,8 @@
 
 
 #include "StatComponent.h"
+#include "DHGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 UStatComponent::UStatComponent()
 {
@@ -22,6 +24,15 @@ void UStatComponent::BeginPlay()
 void UStatComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
+
+}
+
+void UStatComponent::SetName(FName NewName)
+{
+	Name = NewName;
+
+	// TEMP Level 1
+	SetLevel(1);
 }
 
 void UStatComponent::OnAttacked(float DamageAmount)
@@ -33,6 +44,20 @@ void UStatComponent::OnAttacked(float DamageAmount)
 void UStatComponent::SetLevel(int32 NewLevel)
 {
 	Level = NewLevel;
+
+	auto GameInstance = Cast<UDHGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (GameInstance)
+	{
+		// TEMP
+		auto StatData = GameInstance->GetStatData(NewLevel);
+		if (StatData)
+		{
+			Level = StatData->Level;
+			SetHp(StatData->MaxHp);
+			MaxHp = StatData->MaxHp;
+			Attack = StatData->Attack;
+		}
+	}
 }
 
 void UStatComponent::SetHp(int32 NewHp)

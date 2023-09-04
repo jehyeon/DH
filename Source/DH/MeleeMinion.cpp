@@ -3,6 +3,14 @@
 
 #include "MeleeMinion.h"
 #include "DrawDebugHelpers.h"
+#include "StatComponent.h"
+
+void AMeleeMinion::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	Stat->SetName(FName(TEXT("MeleeMinion")));
+}
 
 void AMeleeMinion::AttackCheck()
 {
@@ -45,6 +53,6 @@ void AMeleeMinion::AttackCheck()
 
 	if (bResult && HitResult.Actor.IsValid())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.Actor->GetName());
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s, %d"), *HitResult.Actor->GetName(), Stat->GetAttack());
 	}
 }

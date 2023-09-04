@@ -15,5 +15,6 @@ class DH_API AMeleeMinion : public ADHCharacter
 	GENERATED_BODY()
 
 protected:
+	virtual void PostInitializeComponents() override;
 	virtual void AttackCheck() override;
 };

@@ -20,8 +20,13 @@ public:
 	virtual void Init() override;
 
 	FStatData* GetStatData(int32 Level);
+	FStatData* GetTerraStat(int32 Level);
+	FStatData* GetMeleeMinionStat(int32 Level);
 
 private:
 	UPROPERTY()
 	UDataTable* TerraStat;
+
+	UPROPERTY()
+	UDataTable* MeleeMinionStat;
 };

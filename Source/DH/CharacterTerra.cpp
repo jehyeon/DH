@@ -3,6 +3,14 @@
 
 #include "CharacterTerra.h"
 #include "DrawDebugHelpers.h"
+#include "StatComponent.h"
+
+void ACharacterTerra::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	Stat->SetName(FName(TEXT("Terra")));
+}
 
 void ACharacterTerra::AttackCheck()
 {
@@ -45,6 +53,6 @@ void ACharacterTerra::AttackCheck()
 
 	if (bResult && HitResult.Actor.IsValid())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.Actor->GetName());
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s, %d"), *HitResult.Actor->GetName(), Stat->GetAttack());
 	}
 }

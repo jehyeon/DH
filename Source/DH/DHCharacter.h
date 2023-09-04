@@ -7,6 +7,7 @@
 #include "DHCharacter.generated.h"
 
 class UDHCharacterAnimInstance;
+class UStatComponent;
 
 UCLASS(config=Game)
 class ADHCharacter : public ACharacter
@@ -20,6 +21,7 @@ class ADHCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
 public:
 	ADHCharacter();
 
@@ -81,6 +83,10 @@ public:
 
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
+public:
+	UPROPERTY(VisibleAnywhere)
+	UStatComponent* Stat;
 
 protected:
 	UPROPERTY()

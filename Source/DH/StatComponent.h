@@ -35,13 +35,19 @@ protected:
 	virtual void InitializeComponent() override;
 
 public:
+	void SetName(FName NewName);
+
 	void OnAttacked(float DamageAmount);
 	void SetLevel(int32 NewLevel);
 	void SetHp(int32 NewHp);
 
 	int32 GetHp() { return Hp; }
+	int32 GetAttack() { return Attack; }
 
 private:
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))
+	FName Name;
+
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))
 	int32 Level;
 

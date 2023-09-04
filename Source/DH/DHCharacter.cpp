@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "DHCharacterAnimInstance.h"
+#include "StatComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ADHCharacter
@@ -45,6 +46,9 @@ ADHCharacter::ADHCharacter()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -97.0f), FRotator(0.0f, -90.0f, 0.0f));
+
+	// Stat Component 추가
+	Stat = CreateDefaultSubobject<UStatComponent>(TEXT("Stat"));
 }
 
 void ADHCharacter::PostInitializeComponents()
