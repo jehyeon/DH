@@ -5,6 +5,7 @@
 #include "DrawDebugHelpers.h"
 
 void ACharacterTerra::AttackCheck()
+{
 	FHitResult HitResult;
 	FCollisionQueryParams Params(NAME_None, false, this);
 
